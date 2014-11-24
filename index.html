@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        <link rel="apple-touch-icon" href="http://www.papersnail.co.uk/images/icons/Icon-57.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="http://www.papersnail.co.uk/images/icons/Icon-72.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="http://www.papersnail.co.uk/images/icons/Icon-57@2x.png"/>
+        <link rel="apple-touch-icon" sizes="144x144" href="http://www.papersnail.co.uk/images/icons/Icon-72@2x.png"/>
+        <!-- iOS Full Screen -->
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <!-- iOS Status Bar Style (default, black, black-translucent) -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <link href='http://fonts.googleapis.com/css?family=Oxygen:300,400,700' rel='stylesheet' type='text/css'>
+        
+        <link rel="stylesheet" href="css/notes.css">
+        
+        <script src="http://code.jquery.com/jquery-1.8.2.min.js" type="text/javascript"></script>
+        
+        <script src="scripts/lib/knockout/knockout-2.1.0.debug.js" type="text/javascript"></script>
+        <script src="scripts/lib/knockout/knockout-mapping-2.0.1.js" type="text/javascript"></script>
+        <script src="scripts/lib/iscroll.js" type="text/javascript"></script>
+        <script src="scripts/lib/uuid.js" type="text/javascript"></script>
+
+        <script src="scripts/note.js" type="text/javascript"></script>
+        <script src="scripts/notes.js" type="text/javascript"></script>
+        <title>Notes</title>
+    </head>
+    <body>
+        <div id="notes" class="notes">
+            <div id="notesList" class="notesList">
+                <header id="notesListHeader" class="notesListHeader">
+                    <span id="enumerator" class="enumerator" data-bind="text: notesApp.dataModel.notesArray().length"></span>
+                    <span id="title" class="title" data-bind="text: notesApp.dataModel.notesArray.length == 1 ? 'Note' : 'Notes'"></span>
+                </header>
+                <div id="noteListWrapper" class="noteListWrapper">
+                    <ul id="noteList" class="noteList notesListText" data-bind="template: { name: 'noteListItemTemplate', foreach: notesApp.dataModel.notesArray }"></ul>
+                </div>
+            </div>
+            <div id="notesDetail" class="notesDetail">
+                <div id="noteContainer" class="noteContainer" data-bind="template: { name: 'noteTemplate', data: notesApp.dataModel.getById(notesApp.dataModel.currentNoteId()) }"></div>
+            </div>
+            <script type="text/html" id="noteListItemTemplate">
+                <li data-bind="click: function() { notesApp.openNote(id()); }">
+                    <div class="notePreview textSmooth" data-bind="text: name ? name : ''"></div>
+                </li>
+            </script>
+            <script type="text/html" id="noteTemplate">
+                <div id="noteBodyBackground" class="noteBodyBackground">
+                    <div id="noteBodyText" class="noteBodyText" data-bind="htmlValue: text" contenteditable="true"></div>
+                </div>
+                <header class="noteContainerHeader isFlexbox">
+                    <div id="notePickerButton" class="notePickerButton" onclick="notesApp.showPicker();">Notes</div>
+                    <div class="isFlexbox noteTitleContainer">
+                        <span id="noteTitle" class="noteTitle" data-bind="text: name ? name : ''"></span>
+                    </div>
+                    <div id="newNoteButton" class="newNoteButton" onclick="notesApp.addNote();">+</div>
+                </header>
+                <div id="notePicker" class="notePicker hidden">
+                    <header id="notesPickerHeader" class="notesPickerHeader">
+                        <span id="enumerator" class="enumerator" data-bind="text: notesApp.dataModel.notesArray().length">4</span>
+                        <span id="title" class="title" data-bind="text: notesApp.dataModel.notesArray().length == 1 ? 'Note' : 'Notes'">Notes</span>
+                    </header>
+                    <div id="notePickerWrapper" class="notePickerWrapper">
+                        <ul id="notePickerList" class="notePickerList notesListText" data-bind="template: { name: 'noteListItemTemplate', foreach: notesApp.dataModel.notesArray }"></ul>
+                    </div>
+                </div>
+            </script>
+        </div>
+    </body>
+</html>

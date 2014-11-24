@@ -1,0 +1,410 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font-size: 10px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+html, body {
+    background: black url("assets/backgroundImage.png") repeat;
+    box-shadow: inset 0 0 25px 0 rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+/* ================ */
+/* helpers */
+/* ================ */
+
+.hide {
+    visibility: hidden;
+}
+
+.hidden {
+    display: none;
+}
+
+.isFlexbox {
+    display: -webkit-flex;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+}
+
+/* ================ */
+/* notes */
+/* ================ */
+
+.notes {
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    font-size: 0;
+    vertical-align: top;
+}
+
+
+.notesListText,
+.noteBodyText,
+.noteTitle {
+    font: 2.5rem Oxygen, sans-serif;
+    font-weight: 400;
+    color: #666;
+}
+
+.noteTitle {
+    color: #FFF;
+}
+
+
+.notesListHeader,
+.notesPickerHeader {
+    font: 3rem Oxygen, sans-serif;
+    font-weight: bold;
+    color: #666;
+    text-shadow: 0 1px 0 #FFF;
+}
+
+.notesList, .notesDetail {
+    box-sizing: border-box;
+    background-clip: padding-box;
+    border: 12px solid transparent;
+    display: inline-block;
+    height: 100%;
+}
+
+/* ================ */
+/* notesList view */
+/* ================ */
+
+.notesList {
+    position: relative;
+    width: 34%;
+    border-right-width: 8px;
+}
+
+.notesListHeader,
+.noteListWrapper {
+    border: 1px solid #FFF;
+    box-sizing: border-box;
+    box-shadow: 0 1px 5px 2px rgba(0,0,0,0.3);
+}
+
+.notesList .noteList {
+    background: #FFF;
+    background: -moz-linear-gradient(top, #FFF 0%, #F9F9F9 50%, #F2F2F2 100%);
+    background: -webkit-linear-gradient(top, #FFF 0%,#F9F9F9 50%,#F2F2F2 100%);
+    background: -ms-linear-gradient(top, #FFF 0%,#F9F9F9 50%,#F2F2F2 100%);
+    background: linear-gradient(top, #FFF 0%,#F9F9F9 50%,#F2F2F2 100%);
+}
+
+.notesListHeader {
+    background: #E7EFFE;
+    background: -moz-linear-gradient(top,  #E7EFFE 0%, #E7EFFE 50%, #CDDCF0 100%);
+    background: -webkit-linear-gradient(top,  #E7EFFE 0%,#E7EFFE 50%,#CDDCF0 100%);
+    background: -ms-linear-gradient(top,  #E7EFFE 0%,#E7EFFE 50%,#CDDCF0 100%);
+    background: linear-gradient(top,  #E7EFFE 0%,#E7EFFE 50%,#CDDCF0 100%);
+
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+}
+
+.noteListWrapper {
+    position: absolute;
+    top: 65px;
+    bottom: 0;
+    width: 100%;
+    background: #EFEFEF;
+}
+
+.noteList {
+    margin: 0 0;
+    padding: 0;
+    list-style-type: none;
+    border-width: 0;
+    text-indent: 5%;
+}
+
+.noteList li {
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #D3CECE;
+}
+
+.noteList li:nth-of-type(even),
+.notePicker ul li:nth-of-type(even) {
+    border-top: 1px solid #FFF;
+    background: #EEE6E6;
+    background: -moz-linear-gradient(top, #EEE6E6 0%, #F2ECEC 50%, #F3F3F3 100%);
+    background: -webkit-linear-gradient(top, #EEE6E6 0%,#F2ECEC 50%,#F3F3F3 100%);
+    background: -ms-linear-gradient(top, #EEE6E6 0%,#F2ECEC 50%,#F3F3F3 100%);
+    background: linear-gradient(top, #EEE6E6 0%,#F2ECEC 50%,#F3F3F3 100%);
+}
+
+.noteList li:nth-of-type(odd),
+.notePicker li:nth-of-type(odd) {
+    background: #FFF;
+    background: -moz-linear-gradient(top, #FFF 0%, #F6F4F5 50%, #E9E6E7 100%);
+    background: -webkit-linear-gradient(top, #FFF 0%, #F6F4F5 50%, #E9E6E7 100%);
+    background: -ms-linear-gradient(top, #FFF 0%, #F6F4F5 50%, #E9E6E7 100%);
+    background: linear-gradient(top, #FFF 0%, #F6F4F5 50%, #E9E6E7 100%);
+}
+
+.notePreview {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 95%;
+    height: 100%;
+}
+
+.notePicker {
+    position: absolute;
+    max-height: 95%;
+    width: 300px;
+    top: 40px;
+    left: 16px;
+    box-sizing: border-box;
+    -webkit-border-image: url("assets/notePickerBI.png") 80 19 19 62 / 80px 19px 19px 62px stretch stretch;
+    -moz-border-image: url("assets/notePickerBI.png") 80 19 19 62 / 80px 19px 19px 62px stretch stretch;
+    border-image: url("assets/notePickerBI.png") 80 19 19 62 / 80px 19px 19px 62px stretch stretch;
+    border-width: 80px 19px 19px 62px;
+    border-image-source: url("assets/notePickerBI.png");
+    border-image-slice: 80 19 19 62 fill;
+    border-image-repeat: stretch;
+    border-style: solid;
+}
+
+.notesPickerHeader {
+    position: relative;
+    top: -35px;
+    left: -22px;
+    width: 100%;
+    line-height: 25px;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.notePickerWrapper {
+    position: relative;
+    height: 90%;
+    width: 100%;
+    top: -20px;
+    left: -21px;
+    background: #EFEFEF;
+}
+
+.notePickerList {
+/*    position: absolute;*/
+/*    height: 100%;*/
+    width: 100%;
+    padding: 0;
+    margin: 0 0;
+    list-style-type: none;
+    text-indent: 5%;
+    
+    border: 1px solid #CCC;
+    box-shadow: inset 0 3px 7px 0 rgba(0,0,0,0.5);
+    font-size: 2rem;
+    overflow: hidden;
+}
+
+.notePickerList li {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #D3CECE;
+}
+
+.notePickerList li:last-child {
+    border-bottom: none;
+}
+
+/* ================ */
+/* notesDetail view */
+/* ================ */
+
+.notesDetail {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 66%;
+    border-left-width: 8px;
+    background: #FDFDBE;
+    background-clip: content-box;
+    z-index: 99;
+}
+
+.noteContainer {
+    position: relative;
+    height: 100%;
+    background: #FFF;
+    background: -moz-linear-gradient(top, #FFF 0%, #F9F9F9 50%, #F2F2F2 100%);
+    background: -webkit-linear-gradient(top, #FFF 0%,#F9F9F9 50%,#F2F2F2 100%);
+    background: -ms-linear-gradient(top, #FFF 0%,#F9F9F9 50%,#F2F2F2 100%);
+    background: linear-gradient(top, #FFF 0%,#F9F9F9 50%,#F2F2F2 100%);
+    border: 1px solid #FFF;
+    box-sizing: border-box;
+    box-shadow: 0 1px 5px 2px rgba(0,0,0,0.3);
+}
+
+.noteContainerHeader {
+    position: relative;
+    font-size: 1rem;
+    color: #FFF;
+    width: 100%;
+    height: 60px;
+    background: #000 url('assets/blackLinenSwatch.png') repeat;
+    border: 1px solid black;
+    margin: -1px 0 0 -1px;
+    box-shadow: 0 4px 1px 0 rgba(0, 0, 0, 0.5);
+}
+
+.noteTitleContainer {
+    width: 30%;
+    height: 100%;
+    max-width: 500px;
+}
+
+@media (orientation: landscape) {
+    .noteTitleContainer {
+        width: 50%;
+    }
+}
+
+@media (orientation: portrait) and (min-width: 320px) {
+    .noteTitleContainer {
+        width: 50%;
+    }
+}
+@media (orientation: landscape) and (min-width: 480px) {
+    .noteTitleContainer {
+        width: 75%;
+    }
+}
+
+@media (orientation: portrait) and (min-width: 361px) {
+    .noteTitleContainer {
+        width: 60%;
+    }
+}
+@media (orientation: landscape) and (min-width: 640px) {
+    .noteTitleContainer {
+        width: 75%;
+    }
+}
+
+.noteTitle {
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 100%;
+    margin-left: 15px;
+    text-align: left;
+    text-shadow: 0 -2px 0 #000;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    line-height: 60px;
+}
+@media (orientation: portrait) {
+    .noteTitle {
+        text-align: center;
+        margin-left: 0;
+    }
+}
+
+.notePickerButton,
+.newNoteButton {
+    height: 25px;
+    width: 70px;
+    margin: 0 15px;
+    box-shadow: inset 0 8px 6px rgba(0, 0, 0, 0.5), 0 1px 0 0 rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    color: #FFF;
+    text-align: center;
+    line-height: 2.5rem;
+    font: 2rem Oxygen, sans-serif;
+    cursor: pointer;
+}
+
+.notePickerButton {
+    font: Oxygen, sans-serif;
+    font-weight: 300;
+    display: none;
+}
+
+.newNoteButton {
+    width: 30px;
+    font-weight: bold;
+}
+
+.noteBodyBackground {
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    padding-top: 34px;
+    background-color: #FFF;
+    background: -webkit-linear-gradient(top, #FFF 0px, #FFF 36px) no-repeat,
+                -webkit-linear-gradient(top, transparent 0px, transparent 34px, #EEE 34px);
+    background: -moz-linear-gradient(top, #FFF 0px, #FFF 36px) no-repeat,
+                -moz-linear-gradient(top, transparent 0px, transparent 34px, #EEE 34px);
+    background: -ms-linear-gradient(top, #FFF 0px, #FFF 36px) no-repeat,
+                -ms-linear-gradient(top, transparent 0px, transparent 34px, #EEE 34px);
+    background: linear-gradient(top, #FFF 0px, #FFF 36px) no-repeat,
+                linear-gradient(top, transparent 0px, transparent 34px, #EEE 34px);
+    background-size: 100% 36px, 100% 35px;
+}
+
+.noteBodyText {
+    position: relative;
+    width: 100%;
+    height: 96%;
+    line-height: 3.5rem;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+    overflow: hidden;
+}
+
+.noteBodyText[contenteditable]:focus {
+    outline: none;
+}
+
+@media only screen and (orientation: portrait) {
+    .notesList {
+      display: none;
+    }
+  
+    .notesDetail {
+        width: 100%;
+        border-width: 0;
+    }
+  
+    .notePickerButton {
+        display: block;
+    }
+
+}
+
+@media only screen and (orientation: landscape) {
+    .notePicker {
+        display: none;
+    }
+}
