@@ -28,7 +28,9 @@ Embedded in [testrig][1] available here:
 * It's a bit flaky.
 
 ## To do
-* Add deletion functionality
+* Add deletion functionality.
+* Add event handler to close picker with a click anywhere
+* Prevent note body receiving focus when picker open.
 * Fix scrolling with long lists of notes.
 * Attend to issues with use of local storage.
 * Get offline mode working.
